@@ -1,0 +1,88 @@
+{
+	"instruments":{
+		"multimeter":{
+			"manufacturer": "Keithley",
+			"model": "2700",
+			"firmware": "",
+			"connection_string":"ASRL1::INSTR",
+			"timeout_ms": 5000,
+			"channels_definition": {
+				"oven_thermometer":{
+					"channel":110,
+					"type": "thermocouple",
+					"thermocouple_type": "K",
+					"reference_junction_type" : "INT",
+					"reference_junction_temp" : 0.0,
+					"units":"C"
+				},
+				"diode1":{
+					"channel":101,
+					"type": "dc_voltage",
+					"reading_range": 2.0
+				},
+				"diode2":{
+					"channel":102,
+					"type": "dc_voltage",
+					"reading_range": 2.0
+				}
+			}
+		},
+		"oven":{
+			"manufacturer": "Hobersal",
+			"model": "2400",
+			"firmware": "",
+			"controller": {
+				"manufacturer":"Eurotherm",
+				"model":"2404",
+				"firmware":"",
+				"connection_string_comment":"connection_string_format--> communication_protocol:communication_id:transport_protocol:method:port:baudrate:bytesize:parity:stopbits:timeout", 
+				"connection_string":"MODBUS:1:RS232:RTU:COM1:9600:8:N:1:3",
+				"addresses":{
+					"read_temperature":1,
+					"set_temperature_sp1":2,
+					"set_output_power":3,
+					"read_output_power":3,
+					"read_temperature_sp1":24,
+					"read_temperature_sp2":25,
+					"set_working_mode":273
+				}
+			},
+			"alias":"oven1"
+		},
+		"source_meter":{
+			"manufacturer": "Keithley",
+			"model": "2400",
+			"firmware": "",
+			"connection_string":"",
+			"timeout_ms": 5000,
+			"source":{
+				"current":{
+					"range":0.2,
+					"level":0.1,
+					"protection":21.0,
+					"delay":0.0
+				},
+				"auto_off":true
+			},
+			"alias":"2400_1"
+		}
+	},
+	"temperature_data_logger":{
+		"sampling_period_secs":1.0,
+		"alias":"temperature_data_logger"
+	},
+	"temperatures_sweep":{
+		"temperatures": [25,50,75,100,125,150,175,200],
+		"delay": {
+			"type": "STDEV",
+			"stdev": 0.01,
+			"nSamples": 120,
+			"repetitions": 2,
+			"reset_repetitions": true
+		}
+	},
+	"results_file":{
+		"path":".",
+		"auto_write":true
+	}
+}
